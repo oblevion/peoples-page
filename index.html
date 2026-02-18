@@ -19,6 +19,10 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
+        
+        body.no-scroll {
+            overflow: hidden;
+        }
 
         /* --- ANIMATION KEYFRAMES --- */
         @keyframes simpleFadeIn {
@@ -45,7 +49,6 @@
             background-color: #000;
         }
 
-        /* THE FADE OUT EFFECT */
         header::after {
             content: '';
             position: absolute;
@@ -74,10 +77,9 @@
 
         .hero-overlay {
             position: absolute;
-            /* MOVED TEXT DOWN */
-            top: 70%; 
+            top: 65%; 
             left: 0;
-            width: 100%; /* Ensures it stays centered horizontally */
+            width: 100%; 
             z-index: 3; 
             text-align: center;
             opacity: 0;
@@ -109,13 +111,13 @@
         }
 
         /* --- SCROLL ANIMATION CLASSES --- */
-        .card-wrapper {
+        .card-wrapper, .team-section-wrapper {
             opacity: 0;
             transform: translateY(100px);
             transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .card-wrapper.show {
+        .show {
             opacity: 1;
             transform: translateY(0);
         }
@@ -124,12 +126,11 @@
         .card-wrapper:nth-child(3) { transition-delay: 0.2s; }
         .card-wrapper:nth-child(4) { transition-delay: 0.3s; }
 
-        /* --- TILT CARD CONTAINER --- */
+        /* --- CONTAINER --- */
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            /* Padding pushes cards down */
-            padding: 60px 20px 100px 20px; 
+            padding: 80px 20px 50px 20px; 
             perspective: 1000px;
             position: relative;
             z-index: 4; 
@@ -139,6 +140,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
+            margin-bottom: 80px;
         }
 
         /* --- CARD STYLES --- */
@@ -155,8 +157,10 @@
             box-shadow: 0 10px 30px -10px rgba(0,0,0,0.8);
         }
 
+        /* UPDATED: Dark Red Glow on Hover */
         .card:hover {
-            box-shadow: 0 20px 50px -10px rgb(255, 0, 0);
+            /* Outer glow + Inner inset glow for depth */
+            box-shadow: 0 20px 40px -10px rgba(244, 2, 2, 0.8), 0 0 20px rgb(250, 2, 2) inset;
             z-index: 10;
         }
 
@@ -178,7 +182,6 @@
         .tile-3 .card-bg { background-position: center 80%; background-size: 280%; }
         .tile-4 .card-bg { background-position: top right; background-size: 220%; }
 
-        /* Glossy overlay */
         .card::after {
             content: "";
             position: absolute;
@@ -196,7 +199,6 @@
             filter: grayscale(0%) brightness(1.1) contrast(1.1);
         }
 
-        /* --- CARD CONTENT --- */
         .card-content {
             position: absolute;
             bottom: 0;
@@ -236,11 +238,169 @@
             position: absolute;
             inset: 0;
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.1);
             transition: border-color 0.3s ease;
         }
+        
+        /* UPDATED: Red border on hover */
         .card:hover .card-border {
-            border-color: rgba(255,255,255,0.6);
+            border-color: rgba(200, 0, 0, 0.8);
+        }
+
+        /* --- TEAM TAGS SECTION --- */
+        .team-section {
+            text-align: center;
+            border-top: 1px solid #333;
+            padding-top: 50px;
+        }
+
+        .team-title {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .tags-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 10px 25px;
+            border: 1px solid #444;
+            border-radius: 50px;
+            color: #aaa;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* UPDATED: Dark Red Glow on Tags */
+        .tag:hover {
+            border-color: #d00000; /* Red border */
+            color: #d00000; /* Red text */
+            box-shadow: 0 0 25px rgba(160, 0, 0, 0.8); /* Intense red glow */
+            transform: translateY(-2px);
+        }
+
+        /* --- TEAM OVERLAY (MODAL) --- */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 1001;
+        }
+        .close-btn:hover { color: #d00000; }
+
+        .overlay-content {
+            width: 90%;
+            max-width: 1000px;
+            text-align: center;
+            transform: scale(0.95);
+            transition: transform 0.4s ease;
+        }
+
+        .overlay.active .overlay-content {
+            transform: scale(1);
+        }
+
+        .overlay-title {
+            font-size: 3rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            margin-bottom: 50px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+            display: inline-block;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .member {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .overlay.active .member { opacity: 1; transform: translateY(0); }
+        .overlay.active .member:nth-child(1) { transition-delay: 0.1s; }
+        .overlay.active .member:nth-child(2) { transition-delay: 0.2s; }
+        .overlay.active .member:nth-child(3) { transition-delay: 0.3s; }
+        .overlay.active .member:nth-child(4) { transition-delay: 0.4s; }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background: #222;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 2px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #555;
+            transition: all 0.3s;
+        }
+
+        /* Updated Avatar hover to match red theme */
+        .member:hover .avatar {
+            border-color: #d00000;
+            color: #d00000;
+            box-shadow: 0 0 20px rgba(160, 0, 0, 0.5);
+        }
+
+        .member h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .member p {
+            color: #777;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* --- FOOTER --- */
@@ -257,6 +417,7 @@
         @media (max-width: 768px) {
             h1 { font-size: 3rem; }
             .grid { grid-template-columns: 1fr; }
+            .hero-overlay { top: 60%; }
         }
     </style>
 </head>
@@ -271,8 +432,8 @@
     </header>
 
     <div class="container">
+        
         <div class="grid">
-            
             <div class="card-wrapper hidden">
                 <div class="card tile-1">
                     <div class="card-bg"></div>
@@ -316,7 +477,49 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="team-section-wrapper hidden">
+            <div class="team-section">
+                <div class="team-title">Band of the Hawk</div>
+                <div class="tags-container">
+                    <button class="tag" onclick="openTeamOverlay()">Leaders</button>
+                    <button class="tag" onclick="openTeamOverlay()">Raiders</button>
+                    <button class="tag" onclick="openTeamOverlay()">Support</button>
+                    <button class="tag" onclick="openTeamOverlay()">Dev Team</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="overlay" id="teamOverlay">
+        <button class="close-btn" onclick="closeTeamOverlay()">&times;</button>
+        <div class="overlay-content">
+            <h2 class="overlay-title">The Members</h2>
+            
+            <div class="members-grid">
+                <div class="member">
+                    <div class="avatar">G</div>
+                    <h3>Griffith</h3>
+                    <p>Commander</p>
+                </div>
+                <div class="member">
+                    <div class="avatar">C</div>
+                    <h3>Casca</h3>
+                    <p>Unit Commander</p>
+                </div>
+                <div class="member">
+                    <div class="avatar">J</div>
+                    <h3>Judeau</h3>
+                    <p>Intel / Throwing Knives</p>
+                </div>
+                <div class="member">
+                    <div class="avatar">P</div>
+                    <h3>Pippin</h3>
+                    <p>Heavy Support</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -341,7 +544,7 @@
             });
         }, observerOptions);
 
-        const hiddenElements = document.querySelectorAll('.card-wrapper, footer');
+        const hiddenElements = document.querySelectorAll('.card-wrapper, .team-section-wrapper, footer');
         hiddenElements.forEach((el) => observer.observe(el));
 
 
@@ -366,6 +569,32 @@
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
             });
+        });
+
+        // --- 3. TEAM OVERLAY LOGIC ---
+        const overlay = document.getElementById('teamOverlay');
+        const body = document.body;
+
+        function openTeamOverlay() {
+            overlay.classList.add('active');
+            body.classList.add('no-scroll');
+        }
+
+        function closeTeamOverlay() {
+            overlay.classList.remove('active');
+            body.classList.remove('no-scroll');
+        }
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                closeTeamOverlay();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                closeTeamOverlay();
+            }
         });
     </script>
 
