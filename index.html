@@ -20,59 +20,115 @@
             overflow-x: hidden;
         }
 
+        /* --- ANIMATION KEYFRAMES --- */
+        @keyframes simpleFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes heroTextSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* --- HERO SECTION --- */
         header {
             width: 100%;
-            height: 70vh;
+            height: 90vh;
             position: relative;
             overflow: hidden;
-            border-bottom: 2px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+
+        /* THE FADE OUT EFFECT */
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50vh; 
+            background: linear-gradient(to bottom, transparent 0%, #050505 100%);
+            z-index: 2; 
+            pointer-events: none;
         }
 
         .hero-img {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center;
             filter: grayscale(100%) contrast(120%);
+            z-index: 1;
+            opacity: 0;
+            animation: simpleFadeIn 2s ease-out forwards;
         }
 
         .hero-overlay {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, #050505 10%, transparent 60%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            padding-bottom: 60px;
+            z-index: 3; 
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroTextSlideIn 1.5s ease-out forwards;
+            animation-delay: 0.8s;
         }
 
         h1 {
-            font-size: 5rem;
+            font-size: 6rem;
             text-transform: uppercase;
             letter-spacing: 15px;
             color: #fff;
-            text-shadow: 0 0 20px rgba(0,0,0,0.9);
+            text-shadow: 0 0 30px rgba(0,0,0,1);
             margin: 0;
+            line-height: 1;
         }
 
         p.subtitle {
-            font-size: 1.2rem;
-            opacity: 0.7;
-            letter-spacing: 4px;
+            font-size: 1.5rem;
+            opacity: 0.9;
+            letter-spacing: 5px;
             text-transform: uppercase;
+            margin-top: 10px;
+            text-shadow: 0 0 10px rgba(0,0,0,1);
+            background-color: rgba(0,0,0,0.5);
+            display: inline-block;
+            padding: 5px 15px;
         }
+
+        /* --- SCROLL ANIMATION CLASSES --- */
+        .card-wrapper {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card-wrapper.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-wrapper:nth-child(2) { transition-delay: 0.1s; }
+        .card-wrapper:nth-child(3) { transition-delay: 0.2s; }
+        .card-wrapper:nth-child(4) { transition-delay: 0.3s; }
 
         /* --- TILT CARD CONTAINER --- */
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 100px 20px;
-            perspective: 1000px; /* Essential for 3D effect */
+            /* Added 80px top padding to lower the cards */
+            padding: 200px 20px 100px 20px; 
+            perspective: 1000px;
+            position: relative;
+            z-index: 4; 
         }
 
         .grid {
@@ -89,19 +145,17 @@
             background-color: #1a1a1a;
             border-radius: 10px;
             cursor: pointer;
-            transform-style: preserve-3d; /* Allows children to be 3D */
+            transform-style: preserve-3d;
             transform: perspective(1000px);
-            /* Transition is handled by JS for movement, but we add a release ease */
-            transition: transform 0.1s ease-out; 
+            transition: transform 0.1s ease-out;
             box-shadow: 0 10px 30px -10px rgba(0,0,0,0.8);
         }
 
         .card:hover {
-            box-shadow: 0 20px 40px -10px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px -10px rgba(236, 3, 3, 0.958);
             z-index: 10;
         }
 
-        /* The background image wrapper */
         .card-bg {
             position: absolute;
             top: 0;
@@ -111,24 +165,20 @@
             border-radius: 10px;
             background-image: url('guts_eclipse_compressed.jpg');
             background-size: cover;
-            filter: grayscale(100%) brightness(0.8);
-            /* Specific positioning for each tile */
-            transition: filter 0.3s ease;
+            filter: grayscale(100%) brightness(0.6);
+            transition: filter 0.5s ease;
         }
         
-        .tile-1 .card-bg { background-position: center 10%; background-size: 350%; } /* Eclipse */
-        .tile-2 .card-bg { background-position: 30% 60%; background-size: 450%; } /* Sword */
-        .tile-3 .card-bg { background-position: center 80%; background-size: 280%; } /* Guts */
-        .tile-4 .card-bg { background-position: top right; background-size: 220%; } /* Crowd */
+        .tile-1 .card-bg { background-position: center 10%; background-size: 350%; }
+        .tile-2 .card-bg { background-position: 30% 60%; background-size: 450%; }
+        .tile-3 .card-bg { background-position: center 80%; background-size: 280%; }
+        .tile-4 .card-bg { background-position: top right; background-size: 220%; }
 
-        /* Glossy overlay effect */
+        /* Glossy overlay */
         .card::after {
             content: "";
             position: absolute;
-            top: 0; 
-            left: 0;
-            width: 100%; 
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             border-radius: 10px;
             background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
             opacity: 0;
@@ -136,15 +186,13 @@
             pointer-events: none;
         }
         
-        .card:hover::after {
-            opacity: 1;
-        }
+        .card:hover::after { opacity: 1; }
         
         .card:hover .card-bg {
-            filter: grayscale(0%) brightness(1.1) contrast(1.1); /* Color/Pop on hover */
+            filter: grayscale(0%) brightness(1.1) contrast(1.1);
         }
 
-        /* --- CARD CONTENT (Text) --- */
+        /* --- CARD CONTENT --- */
         .card-content {
             position: absolute;
             bottom: 0;
@@ -152,9 +200,7 @@
             width: 100%;
             padding: 30px;
             border-radius: 0 0 10px 10px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            
-            /* 3D Transform settings for text pop */
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
             transform: translateZ(50px) translateY(20px); 
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -182,7 +228,6 @@
             line-height: 1.4;
         }
 
-        /* --- BORDER GLOW --- */
         .card-border {
             position: absolute;
             inset: 0;
@@ -197,10 +242,13 @@
         /* --- FOOTER --- */
         footer {
             text-align: center;
-            padding: 40px;
+            padding: 60px;
             color: #555;
             font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
+        footer.show { opacity: 1; }
 
         @media (max-width: 768px) {
             h1 { font-size: 3rem; }
@@ -221,72 +269,96 @@
     <div class="container">
         <div class="grid">
             
-            <div class="card tile-1">
-                <div class="card-bg"></div>
-                <div class="card-border"></div>
-                <div class="card-content">
-                    <div class="card-title">Crimson Behelit</div>
-                    <div class="card-desc">The egg of the king awakens. A portal to the deepest abyss opens above.</div>
+            <div class="card-wrapper hidden">
+                <div class="card tile-1">
+                    <div class="card-bg"></div>
+                    <div class="card-border"></div>
+                    <div class="card-content">
+                        <div class="card-title">Crimson Behelit</div>
+                        <div class="card-desc">The egg of the king awakens. A portal to the deepest abyss opens above.</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card tile-2">
-                <div class="card-bg"></div>
-                <div class="card-border"></div>
-                <div class="card-content">
-                    <div class="card-title">Dragon Slayer</div>
-                    <div class="card-desc">It was too big to be called a sword. Massive, thick, heavy, and far too rough.</div>
+            <div class="card-wrapper hidden">
+                <div class="card tile-2">
+                    <div class="card-bg"></div>
+                    <div class="card-border"></div>
+                    <div class="card-content">
+                        <div class="card-title">Dragon Slayer</div>
+                        <div class="card-desc">It was too big to be called a sword. Massive, thick, heavy, and far too rough.</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card tile-3">
-                <div class="card-bg"></div>
-                <div class="card-border"></div>
-                <div class="card-content">
-                    <div class="card-title">Guts</div>
-                    <div class="card-desc">The struggler. He who challenges causality and fights against a predetermined fate.</div>
+            <div class="card-wrapper hidden">
+                <div class="card tile-3">
+                    <div class="card-bg"></div>
+                    <div class="card-border"></div>
+                    <div class="card-content">
+                        <div class="card-title">Guts</div>
+                        <div class="card-desc">The struggler. He who challenges causality and fights against a predetermined fate.</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card tile-4">
-                <div class="card-bg"></div>
-                <div class="card-border"></div>
-                <div class="card-content">
-                    <div class="card-title">The Despair</div>
-                    <div class="card-desc">Surrounded by the faces of the damned, waiting for the feast to begin.</div>
+            <div class="card-wrapper hidden">
+                <div class="card tile-4">
+                    <div class="card-bg"></div>
+                    <div class="card-border"></div>
+                    <div class="card-content">
+                        <div class="card-title">The Despair</div>
+                        <div class="card-desc">Surrounded by the faces of the damned, waiting for the feast to begin.</div>
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <footer>
+    <footer class="hidden">
         <p>GRIFFITH DID EVERYTHING WRONG</p>
     </footer>
 
     <script>
+        // --- 1. SCROLL ANIMATION OBSERVER ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const hiddenElements = document.querySelectorAll('.card-wrapper, footer');
+        hiddenElements.forEach((el) => observer.observe(el));
+
+
+        // --- 2. TILT EFFECT LOGIC ---
         const cards = document.querySelectorAll('.card');
 
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left; // Mouse X position within the card
-                const y = e.clientY - rect.top;  // Mouse Y position within the card
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;
                 
-                // Calculate center of card
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
 
-                // Calculate rotation (Divide by specific number to control sensitivity)
-                // -20 to 20 degrees looks good
-                const rotateX = ((y - centerY) / centerY) * -15; 
-                const rotateY = ((x - centerX) / centerX) * 15;
+                const rotateX = ((y - centerY) / centerY) * -12; 
+                const rotateY = ((x - centerX) / centerX) * 12;
 
-                // Apply the transform
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
             });
 
-            // Reset when mouse leaves
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
             });
