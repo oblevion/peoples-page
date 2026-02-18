@@ -13,16 +13,17 @@
         }
 
         body {
-            background-color: #050505; /* Deep black/grey background */
-            color: #dcdcdc; /* Off-white text for readability */
+            background-color: #050505;
+            color: #dcdcdc;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* --- HERO SECTION --- */
         header {
             width: 100%;
-            height: 80vh; /* Takes up 80% of the screen height */
+            height: 70vh;
             position: relative;
             overflow: hidden;
             border-bottom: 2px solid #333;
@@ -33,7 +34,7 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
-            filter: grayscale(100%) contrast(110%); /* Enhances the manga look */
+            filter: grayscale(100%) contrast(120%);
         }
 
         .hero-overlay {
@@ -41,122 +42,169 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            padding: 40px;
-            background: linear-gradient(to top, #050505, transparent);
-            text-align: center;
+            height: 100%;
+            background: linear-gradient(to top, #050505 10%, transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 60px;
         }
 
         h1 {
-            font-size: 4rem;
+            font-size: 5rem;
             text-transform: uppercase;
-            letter-spacing: 10px;
+            letter-spacing: 15px;
             color: #fff;
-            text-shadow: 0 0 10px rgba(0,0,0,0.8);
-            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0,0,0,0.9);
+            margin: 0;
         }
 
         p.subtitle {
             font-size: 1.2rem;
-            opacity: 0.8;
-            letter-spacing: 2px;
+            opacity: 0.7;
+            letter-spacing: 4px;
+            text-transform: uppercase;
         }
 
-        /* --- TILES SECTION --- */
+        /* --- TILT CARD CONTAINER --- */
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 100px 20px;
+            perspective: 1000px; /* Essential for 3D effect */
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
         }
 
-        /* --- CARD DESIGN --- */
+        /* --- CARD STYLES --- */
         .card {
             position: relative;
-            height: 400px;
+            height: 450px;
+            width: 100%;
             background-color: #1a1a1a;
-            border: 1px solid #333;
-            overflow: hidden;
+            border-radius: 10px;
             cursor: pointer;
-            transition: border-color 0.3s ease;
+            transform-style: preserve-3d; /* Allows children to be 3D */
+            transform: perspective(1000px);
+            /* Transition is handled by JS for movement, but we add a release ease */
+            transition: transform 0.1s ease-out; 
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.8);
         }
 
         .card:hover {
-            border-color: #fff;
+            box-shadow: 0 20px 40px -10px rgba(255, 255, 255, 0.1);
+            z-index: 10;
         }
 
-        /* The background images for the tiles. 
-           In a real scenario, you would crop the main image 4 times. 
-           Here, I am using CSS to show specific parts of your main image. */
+        /* The background image wrapper */
         .card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            border-radius: 10px;
             background-image: url('guts_eclipse_compressed.jpg');
             background-size: cover;
-            transition: transform 0.5s ease, filter 0.5s ease;
+            filter: grayscale(100%) brightness(0.8);
+            /* Specific positioning for each tile */
+            transition: filter 0.3s ease;
         }
+        
+        .tile-1 .card-bg { background-position: center 10%; background-size: 350%; } /* Eclipse */
+        .tile-2 .card-bg { background-position: 30% 60%; background-size: 450%; } /* Sword */
+        .tile-3 .card-bg { background-position: center 80%; background-size: 280%; } /* Guts */
+        .tile-4 .card-bg { background-position: top right; background-size: 220%; } /* Crowd */
 
-        /* Positioning the background to focus on specific details */
-        .tile-1 .card-bg { background-position: center 10%; background-size: 300%; } /* Focus: Eclipse/Sun */
-        .tile-2 .card-bg { background-position: 30% 60%; background-size: 400%; } /* Focus: Sword Handle */
-        .tile-3 .card-bg { background-position: center 80%; background-size: 250%; } /* Focus: Guts Face */
-        .tile-4 .card-bg { background-position: top right; background-size: 200%; } /* Focus: Background Faces */
-
+        /* Glossy overlay effect */
+        .card::after {
+            content: "";
+            position: absolute;
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .card:hover::after {
+            opacity: 1;
+        }
+        
         .card:hover .card-bg {
-            transform: scale(1.1);
-            filter: brightness(0.4); /* Darkens image on hover to make text readable */
+            filter: grayscale(0%) brightness(1.1) contrast(1.1); /* Color/Pop on hover */
         }
 
-        /* --- HOVER CONTENT --- */
+        /* --- CARD CONTENT (Text) --- */
         .card-content {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             padding: 30px;
-            transform: translateY(100px); /* Pushes text down initially */
+            border-radius: 0 0 10px 10px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            
+            /* 3D Transform settings for text pop */
+            transform: translateZ(50px) translateY(20px); 
             opacity: 0;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
         }
 
         .card:hover .card-content {
-            transform: translateY(0);
+            transform: translateZ(60px) translateY(0);
             opacity: 1;
         }
 
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
             text-transform: uppercase;
-            margin-bottom: 10px;
-            border-left: 3px solid #fff;
-            padding-left: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,1);
         }
 
         .card-desc {
-            font-size: 0.9rem;
-            color: #aaa;
+            font-size: 0.95rem;
+            color: #ccc;
+            text-shadow: 0 1px 2px rgba(0,0,0,1);
+            line-height: 1.4;
+        }
+
+        /* --- BORDER GLOW --- */
+        .card-border {
+            position: absolute;
+            inset: 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: border-color 0.3s ease;
+        }
+        .card:hover .card-border {
+            border-color: rgba(255,255,255,0.6);
         }
 
         /* --- FOOTER --- */
         footer {
             text-align: center;
             padding: 40px;
+            color: #555;
             font-size: 0.8rem;
-            opacity: 0.5;
-            border-top: 1px solid #333;
-            margin-top: 50px;
         }
 
-        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
+            h1 { font-size: 3rem; }
             .grid { grid-template-columns: 1fr; }
-            .card-content { opacity: 1; transform: translateY(0); background: rgba(0,0,0,0.7); }
-            .card-bg { filter: brightness(0.6); }
         }
     </style>
 </head>
@@ -166,7 +214,7 @@
         <img src="guts_eclipse_compressed.jpg" alt="Berserk Eclipse" class="hero-img">
         <div class="hero-overlay">
             <h1>The Eclipse</h1>
-            <p class="subtitle">A FATE FORGED IN DARKNESS</p>
+            <p class="subtitle">Sacrifice Everything</p>
         </div>
     </header>
 
@@ -175,33 +223,37 @@
             
             <div class="card tile-1">
                 <div class="card-bg"></div>
+                <div class="card-border"></div>
                 <div class="card-content">
-                    <h3 class="card-title">The Event</h3>
-                    <p class="card-desc">A cosmic alignment of sacrifice and despair, marking the moment the world changed forever.</p>
+                    <div class="card-title">Crimson Behelit</div>
+                    <div class="card-desc">The egg of the king awakens. A portal to the deepest abyss opens above.</div>
                 </div>
             </div>
 
             <div class="card tile-2">
                 <div class="card-bg"></div>
+                <div class="card-border"></div>
                 <div class="card-content">
-                    <h3 class="card-title">The Iron</h3>
-                    <p class="card-desc">More than a sword. A heap of raw iron forged to cleave through nightmares.</p>
+                    <div class="card-title">Dragon Slayer</div>
+                    <div class="card-desc">It was too big to be called a sword. Massive, thick, heavy, and far too rough.</div>
                 </div>
             </div>
 
             <div class="card tile-3">
                 <div class="card-bg"></div>
+                <div class="card-border"></div>
                 <div class="card-content">
-                    <h3 class="card-title">The Struggler</h3>
-                    <p class="card-desc">One who stands against the current of causality. The Black Swordsman.</p>
+                    <div class="card-title">Guts</div>
+                    <div class="card-desc">The struggler. He who challenges causality and fights against a predetermined fate.</div>
                 </div>
             </div>
 
             <div class="card tile-4">
                 <div class="card-bg"></div>
+                <div class="card-border"></div>
                 <div class="card-content">
-                    <h3 class="card-title">The Apostles</h3>
-                    <p class="card-desc">A twisted audience of demons awaiting the feast of the branded.</p>
+                    <div class="card-title">The Despair</div>
+                    <div class="card-desc">Surrounded by the faces of the damned, waiting for the feast to begin.</div>
                 </div>
             </div>
 
@@ -209,8 +261,37 @@
     </div>
 
     <footer>
-        <p>Created with Gemini</p>
+        <p>GRIFFITH DID EVERYTHING WRONG</p>
     </footer>
+
+    <script>
+        const cards = document.querySelectorAll('.card');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; // Mouse X position within the card
+                const y = e.clientY - rect.top;  // Mouse Y position within the card
+                
+                // Calculate center of card
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // Calculate rotation (Divide by specific number to control sensitivity)
+                // -20 to 20 degrees looks good
+                const rotateX = ((y - centerY) / centerY) * -15; 
+                const rotateY = ((x - centerX) / centerX) * 15;
+
+                // Apply the transform
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+            });
+
+            // Reset when mouse leaves
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+        });
+    </script>
 
 </body>
 </html>
