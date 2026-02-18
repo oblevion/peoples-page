@@ -74,6 +74,10 @@
 
         .hero-overlay {
             position: absolute;
+            /* MOVED TEXT DOWN */
+            top: 65%; 
+            left: 0;
+            width: 100%; /* Ensures it stays centered horizontally */
             z-index: 3; 
             text-align: center;
             opacity: 0;
@@ -124,8 +128,8 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            /* Added 80px top padding to lower the cards */
-            padding: 200px 20px 100px 20px; 
+            /* Padding pushes cards down */
+            padding: 80px 20px 100px 20px; 
             perspective: 1000px;
             position: relative;
             z-index: 4; 
@@ -152,7 +156,7 @@
         }
 
         .card:hover {
-            box-shadow: 0 20px 50px -10px rgba(236, 3, 3, 0.958);
+            box-shadow: 0 20px 50px -10px rgba(255, 255, 255, 0.15);
             z-index: 10;
         }
 
