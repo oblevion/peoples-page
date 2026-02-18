@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Eclipse - Berserk Tribute</title>
+    <style>
+        /* --- RESET & BASIC STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #050505; /* Deep black/grey background */
+            color: #dcdcdc; /* Off-white text for readability */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* --- HERO SECTION --- */
+        header {
+            width: 100%;
+            height: 80vh; /* Takes up 80% of the screen height */
+            position: relative;
+            overflow: hidden;
+            border-bottom: 2px solid #333;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: grayscale(100%) contrast(110%); /* Enhances the manga look */
+        }
+
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px;
+            background: linear-gradient(to top, #050505, transparent);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            letter-spacing: 2px;
+        }
+
+        /* --- TILES SECTION --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        /* --- CARD DESIGN --- */
+        .card {
+            position: relative;
+            height: 400px;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            overflow: hidden;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #fff;
+        }
+
+        /* The background images for the tiles. 
+           In a real scenario, you would crop the main image 4 times. 
+           Here, I am using CSS to show specific parts of your main image. */
+        .card-bg {
+            width: 100%;
+            height: 100%;
+            background-image: url('guts_eclipse_compressed.jpg');
+            background-size: cover;
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+
+        /* Positioning the background to focus on specific details */
+        .tile-1 .card-bg { background-position: center 10%; background-size: 300%; } /* Focus: Eclipse/Sun */
+        .tile-2 .card-bg { background-position: 30% 60%; background-size: 400%; } /* Focus: Sword Handle */
+        .tile-3 .card-bg { background-position: center 80%; background-size: 250%; } /* Focus: Guts Face */
+        .tile-4 .card-bg { background-position: top right; background-size: 200%; } /* Focus: Background Faces */
+
+        .card:hover .card-bg {
+            transform: scale(1.1);
+            filter: brightness(0.4); /* Darkens image on hover to make text readable */
+        }
+
+        /* --- HOVER CONTENT --- */
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            transform: translateY(100px); /* Pushes text down initially */
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .card:hover .card-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            border-left: 3px solid #fff;
+            padding-left: 10px;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.8rem;
+            opacity: 0.5;
+            border-top: 1px solid #333;
+            margin-top: 50px;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .grid { grid-template-columns: 1fr; }
+            .card-content { opacity: 1; transform: translateY(0); background: rgba(0,0,0,0.7); }
+            .card-bg { filter: brightness(0.6); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="guts_eclipse_compressed.jpg" alt="Berserk Eclipse" class="hero-img">
+        <div class="hero-overlay">
+            <h1>The Eclipse</h1>
+            <p class="subtitle">A FATE FORGED IN DARKNESS</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="grid">
+            
+            <div class="card tile-1">
+                <div class="card-bg"></div>
+                <div class="card-content">
+                    <h3 class="card-title">The Event</h3>
+                    <p class="card-desc">A cosmic alignment of sacrifice and despair, marking the moment the world changed forever.</p>
+                </div>
+            </div>
+
+            <div class="card tile-2">
+                <div class="card-bg"></div>
+                <div class="card-content">
+                    <h3 class="card-title">The Iron</h3>
+                    <p class="card-desc">More than a sword. A heap of raw iron forged to cleave through nightmares.</p>
+                </div>
+            </div>
+
+            <div class="card tile-3">
+                <div class="card-bg"></div>
+                <div class="card-content">
+                    <h3 class="card-title">The Struggler</h3>
+                    <p class="card-desc">One who stands against the current of causality. The Black Swordsman.</p>
+                </div>
+            </div>
+
+            <div class="card tile-4">
+                <div class="card-bg"></div>
+                <div class="card-content">
+                    <h3 class="card-title">The Apostles</h3>
+                    <p class="card-desc">A twisted audience of demons awaiting the feast of the branded.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Created with Gemini</p>
+    </footer>
+
+</body>
+</html>
