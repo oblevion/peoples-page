@@ -280,7 +280,92 @@
     color: #ff0000; /* Name turns red on hover */
     text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
 }
+/* --- VERTICAL PARALLEL TABS FOR WEBSITE TEAM --- */
+.website-tabs-container {
+    display: flex;
+    width: 100%;
+    height: 60vh; /* Takes up most of the overlay height */
+    gap: 10px;
+    margin-top: 20px;
+}
 
+.vertical-tab {
+    flex: 1; /* All tabs start with equal width */
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    border: 1px solid #333;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Expansion Effect: The hovered tab grows while others shrink */
+.vertical-tab:hover {
+    flex: 12; 
+    border-color: #ff0000;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+}
+
+/* Character Backgrounds */
+.tab-0 { background-image: url('guts.jpg'); }
+.tab-1 { background-image: url('griffith.jpg'); }
+.tab-2 { background-image: url('Casca_Render.webp'); }
+.tab-3 { background-image: url('skull.jpg'); }
+.tab-4 { background-image: url('zodd.jpg'); }
+
+.tab-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent 100%);
+    z-index: 1;
+}
+
+.tab-content-vertical {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    right: 20px; /* Added right spacing to define boundaries */
+    z-index: 2;
+    color: white;
+    pointer-events: none;
+    
+}
+
+.tab-name-vert {
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    
+    /* 1. Handle long names */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    
+    /* 2. Glow effect for readability against busy backgrounds */
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 1);
+    transition: all 0.4s ease;
+}
+
+.tab-role-vert {
+    font-size: 0.9rem;
+    color: #ff0000;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.4s ease;
+}
+
+.vertical-tab:hover .tab-name-vert {
+    white-space: normal; /* Allows text to wrap or expand */
+    overflow: visible;
+    letter-spacing: 3px;
+    font-size: 1.7rem; /* Slight size increase to emphasize the reveal */
+}
 .member-row:hover .member-action {
     color: #ff0000; /* Action text turns red */
 }
@@ -379,7 +464,7 @@
                     <button class="tag" onclick="openTeamOverlay('cstm')">Management Team</button>
                     <button class="tag" onclick="openTeamOverlay('cege')">Cultural Events and Guest Reception Team</button>
                     <button class="tag" onclick="openTeamOverlay('soeh')">Stall Organizing, Event Handling Team</button>
-                    <button class="tag" onclick="openTeamOverlay('web')">Website Team</button>
+                    <button class="tag" onclick="openTeamOverlay('website')">Website Team</button>
                 </div>
             </div>
         </div>
@@ -537,16 +622,26 @@
                     , { name: "Rishav Raj", role: "rishav253081@iiitmanipur.ac.in" }
                     , { name: "Priyanshu ", role: "priy240102029@iiitmanipur.ac.in" }]},
                    
-                     web: {heading:{name:"Website Team"},
+                     soeh: {heading:{name:"Stall organizing, Event handling Team"},
                 leader: { name: "Sandeep Kumar Saini ", contact: "sand230101029@iiitmanipur.ac.in | +917850832958" },
             members:[ {name: "Nancy", role: "nanc240101052@iiitmanipur.ac.in" }
                     , { name: "Rishi Babu ", role: "rishi253084@iiitmanipur.ac.in" }
                     , { name: "Abhay", role: "abhay252014@iiitmanipur.ac.in" }
                     , { name: "Nabajit Das ", role: "nabajit253027@iiitmanipur.ac.in" }
                     , { name: "Ujjwal Tiwari", role: "ujjwal253071@iiitmanipur.ac.in" }
-                    , { name: "Piyush yadav ", role: "piyush253078@iiitmanipur.ac.in" }
                     , { name: "Shaurya Singh ", role: "shaurya253074@iiitmanipur.ac.in" }
-                    , { name: "Ankit Yadav", role: "ankit254053@iiitmanipur.ac.in" }]},
+                    , { name: "Piyush yadav ", role: "piyush253078@iiitmanipur.ac.in" }
+                    , { name: "Ankit Yadav", role: "ankit254053@iiitmanipur.ac.in" }
+                    ]},
+                     website: {heading:{name:"Website Team"},
+                
+                     members:[ 
+                         { name: "Harshit kumar ", role: "hars240101005@iiitmanipur.ac.in" }
+                         ,{ name: "Sanjeev Singh", role: "sanj240101002@iiitmanipur.ac.in" }
+                         , { name: "Aryan Singhvishesh", role: "arya240102006@iiitmanipur.ac.in" }
+                         , { name: "Sahil", role: "sahi240102015@iiitmanipur.ac.in" }
+                         ,{ name: "Anant Bhardwaj ", role: "anan240101007@iiitmanipur.ac.in" }
+                    ]},
                 };
 
         const observer = new IntersectionObserver((entries) => {
@@ -569,41 +664,60 @@
         const overlay = document.getElementById('teamOverlay');
         const membersGrid = document.getElementById('membersGrid');
         const overlayTitle = document.getElementById('overlayTitle');
+function openTeamOverlay(category) {
+    const grid = document.getElementById('membersGrid');
+    const title = document.getElementById('overlayTitle');
+    grid.innerHTML = '';
+    const data = teamData[category];
+    title.textContent = data.heading.name.toUpperCase();
 
-        function openTeamOverlay(category) {
-            const grid = document.getElementById('membersGrid');
-            const title = document.getElementById('overlayTitle');
-            grid.innerHTML = '';
-            const data = teamData[category];
-            title.textContent = data.heading.name.toUpperCase();
+    if (!data) return;
 
-            if (!data) return;
+    if (category === 'website') {
+        // Create the Parallel Tab Layout for Website Team
+        const tabsContainer = document.createElement('div');
+        tabsContainer.className = 'website-tabs-container';
 
-            // 1. Add Big Leader Tag with Contact Info
-            const banner = document.createElement('div');
-            banner.className = 'leader-banner';
-            banner.innerHTML = `
-                <h3>LEADER: ${data.leader.name}</h3>
-                <div class="leader-contact">CONTACT: ${data.leader.contact}</div>
+        // Display first 5 members as vertical parallel tabs
+        data.members.slice(0, 5).forEach((m, index) => {
+            const tab = document.createElement('div');
+            tab.className = `vertical-tab tab-${index}`;
+            tab.innerHTML = `
+                <div class="tab-overlay"></div>
+                <div class="tab-content-vertical">
+                    <span class="tab-name-vert">${m.name.split(' ')[0]}</span>
+                    <span class="tab-role-vert">${m.role}</span>
+                </div>
             `;
-            grid.appendChild(banner);
+            tabsContainer.appendChild(tab);
+        });
+        grid.appendChild(tabsContainer);
+    } else {
+        // Keep your original code for all other teams
+        const banner = document.createElement('div');
+        banner.className = 'leader-banner';
+        banner.innerHTML = `
+            <h3>LEADER: ${data.leader.name}</h3>
+            <div class="leader-contact">CONTACT: ${data.leader.contact}</div>
+        `;
+        grid.appendChild(banner);
 
-            // 2. Add rest of the members
-            data.members.forEach(m => {
-                const div = document.createElement('div');
-                div.className = 'member-row';
-                div.innerHTML = `
-                    <div class="member-info">
-                        <span class="member-name">${m.name}</span><br>
-                        <span class="member-role">${m.role}</span>
-                    </div>
-                `;
-                grid.appendChild(div);
-            });
+        data.members.forEach(m => {
+            const div = document.createElement('div');
+            div.className = 'member-row';
+            div.innerHTML = `
+                <div class="member-info">
+                    <span class="member-name">${m.name}</span><br>
+                    <span class="member-role">${m.role}</span>
+                </div>
+            `;
+            grid.appendChild(div);
+        });
+    }
 
-            document.getElementById('teamOverlay').classList.add('active');
-            document.body.classList.add('no-scroll');
-        }
+    document.getElementById('teamOverlay').classList.add('active');
+    document.body.classList.add('no-scroll');
+}
         function closeTeamOverlay() { overlay.classList.remove('active'); document.body.classList.remove('no-scroll'); }
         overlay.addEventListener('click', (e) => { if (e.target === overlay) closeTeamOverlay(); });
 
