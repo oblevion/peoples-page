@@ -133,14 +133,29 @@
         }
         .card:hover .card-sheen { transform: skewX(-25deg) translateX(200%); transition: transform 0.7s ease-in-out; }
         .card-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 10px;
-            background-image: url('guts_eclipse_compressed.jpg'); background-size: cover;
-            filter: grayscale(100%) brightness(0.6); transition: filter 0.5s ease;
-        }
-        .tile-1 .card-bg { background-position: center 10%; background-size: 350%; }
-        .tile-2 .card-bg { background-position: 30% 60%; background-size: 450%; }
-        .tile-3 .card-bg { background-position: center 80%; background-size: 280%; }
-        .tile-4 .card-bg { background-position: top right; background-size: 220%; }
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(100%) brightness(0.6);
+    transition: filter 0.5s ease;
+}
+.tile-1 .card-bg { 
+    background-image: url('director.jpg'); 
+}
+.tile-2 .card-bg { 
+    background-image: url('Kishorjit.jpg'); 
+}
+.tile-3 .card-bg { 
+    background-image: url('Malemnganbi.jpeg'); 
+}
+.tile-4 .card-bg { 
+    background-image: url('guest_image.jpg'); 
+}
         .card:hover .card-bg { filter: grayscale(0%) brightness(1.1) contrast(1.1); }
         .card-content {
             position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px; border-radius: 0 0 10px 10px;
@@ -149,7 +164,7 @@
         }
         .card:hover .card-content { transform: translateZ(60px) translateY(0); opacity: 1; }
         .card-title { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 8px; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,1); }
-        .card-desc { font-size: 0.95rem; color: #ccc; text-shadow: 0 1px 2px rgba(0,0,0,1); line-height: 1.4; }
+        .card-desc { font-size: 1.1rem; color: #ccc; text-shadow: 0 1px 2px rgba(0,0,0,1); line-height: 1.4; }
 
         /* --- TEAM TAGS --- */
         .team-section { text-align: center; border-top: 1px solid #333; padding-top: 50px; }
@@ -273,9 +288,9 @@
         <div class="ash-container" id="ashContainer"></div>
         <img src="guts_eclipse_compressed.jpg" alt="Berserk Eclipse" class="hero-img">
         <div class="hero-overlay">
-            <h1>The Eclipse</h1>
+            <h1>people</h1>
             <br>
-            <p class="subtitle">Sacrifice Everything</p>
+            <p class="subtitle">IIIT manipur</p>
         </div>
     </header>
 
@@ -286,8 +301,9 @@
                     <div class="card-bg"></div>
                     <div class="card-sheen"></div>
                     <div class="card-content">
-                        <div class="card-title">Crimson Behelit</div>
-                        <div class="card-desc">The egg of the king awakens. A portal to the deepest abyss opens above.</div>
+                        <div class="card-title">director</div>
+                        <div class="card-desc">Prof. Krishnan Baskar</div>
+                        <div class="card-desc">EMAIL ID:-director@iiitmanipur.ac.in</div>
                     </div>
                 </div>
             </div>
@@ -296,8 +312,9 @@
                     <div class="card-bg"></div>
                     <div class="card-sheen"></div>
                     <div class="card-content">
-                        <div class="card-title">Dragon Slayer</div>
-                        <div class="card-desc">It was too big to be called a sword. Massive, thick, heavy, and far too rough.</div>
+                        <div class="card-title" background-image='Kishorjit.jpg'>registrar</div>
+                        <div class="card-desc">Dr Nongmeikapam Kishorjit Singh</div>
+                        <div class="card-desc">EMAIL ID:-kishorjit@iiitmanipur.ac.in</div>
                     </div>
                 </div>
             </div>
@@ -306,8 +323,9 @@
                     <div class="card-bg"></div>
                     <div class="card-sheen"></div>
                     <div class="card-content">
-                        <div class="card-title">Guts</div>
-                        <div class="card-desc">The struggler. He who challenges causality and fights against a predetermined fate.</div>
+                        <div class="card-title">student affairs</div>
+                        <div class="card-desc">Dr. Akoijam Malemnganbi </div>
+                        <div class="card-desc">EMAIL ID:-akoijam@iiitmanipur.ac.in</div>
                     </div>
                 </div>
             </div>
@@ -316,7 +334,7 @@
                     <div class="card-bg"></div>
                     <div class="card-sheen"></div>
                     <div class="card-content">
-                        <div class="card-title">The Despair</div>
+                        <div class="card-title">cheif guest</div>
                         <div class="card-desc">Surrounded by the faces of the damned, waiting for the feast to begin.</div>
                     </div>
                 </div>
