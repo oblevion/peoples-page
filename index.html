@@ -180,7 +180,13 @@
         /* --- TEAM TAGS --- */
         .team-section { text-align: center; border-top: 1px solid #333; padding-top: 50px; }
         .team-title { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 4px; color: #666; margin-bottom: 30px; }
-        .tags-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .tags-container { display: flex;
+    flex-direction: column; /* This forces one tag per line */
+    align-items: center;    /* This centers them horizontally */
+    gap: 20px;              /* Space between each tag */
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px; }
         
         .tag {
             padding: 15px 45px; border: 1px solid #444; border-radius: 50px; color: #aaa; text-transform: uppercase;
