@@ -438,35 +438,33 @@
         footer { text-align: center; padding: 60px; color: #555; font-size: 0.8rem; opacity: 0; transition: opacity 1s ease; }
         footer.show { opacity: 1; }
 
-        /* --- MOBILE VIEW: AUTO-SHOW CARD CONTENT --- */
-@media (max-width: 768px) {
-    /* Force the content to be visible */
-    .card-content {
+
+/* --- MOBILE VIEW: AUTO-SHOW CARD CONTENT --- */
+/* This block ONLY runs on screens 768px wide or smaller */
+@media screen and (max-width: 768px) {
+    /* Force the text content to be visible without hover */
+    .grid .card-wrapper .card .card-content {
         opacity: 1 !important;
         transform: translateZ(60px) translateY(0) !important;
         background: linear-gradient(to top, rgba(0,0,0,0.9) 40%, transparent) !important;
+        pointer-events: auto;
     }
 
-    /* Keep the background bright and colorful */
-    .card-bg {
+    /* Force the background image to be colored/bright without hover */
+    .grid .card-wrapper .card .card-bg {
         filter: grayscale(0%) brightness(1) contrast(1.1) !important;
     }
 
-    /* Ensure titles are readable on smaller screens */
+    /* Adjust font sizes for mobile readability */
     .card-title {
-        font-size: 1.4rem !important;
+        font-size: 1.5rem !important;
+        letter-spacing: 5px !important;
     }
 
     .card-desc {
-        font-size: 0.9rem !important;
+        font-size: 1rem !important;
     }
 }
-    /* Force the content to be visible */
-    .card-content {
-        opacity: 1 !important;
-        transform: translateZ(60px) translateY(0) !important;
-        background: linear-gradient(to top, rgba(0,0,0,0.9) 40%, transparent) !important;
-    }
     </style>
 </head>
 <body>
