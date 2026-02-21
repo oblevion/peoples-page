@@ -19,7 +19,7 @@
 
         /* --- BRAND OF SACRIFICE --- */
         .brand-container {
-            position: fixed;
+            position:fixed;
             top: 25px;
             left: 25px;
             z-index: 5000;
@@ -114,7 +114,14 @@
         }
 
         /* --- LAYOUT --- */
-        .container { max-width: 1400px; margin: 0 auto; padding: 80px 20px 50px 20px; perspective: 1000px; position: relative; z-index: 4; }
+        .container { 
+    max-width: 95%; /* Change from 1400px to a percentage */
+    margin: 0 auto; 
+    padding: 80px 20px 50px 20px; 
+    perspective: 1000px; 
+    position: relative; 
+    z-index: 4; 
+}
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-bottom: 80px; }
         .card-wrapper, .team-section-wrapper { opacity: 0; transform: translateY(100px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .show { opacity: 1; transform: translateY(0); }
@@ -155,6 +162,9 @@
 }
 .tile-4 .card-bg { 
     background-image: url('guest_image.jpg'); 
+}
+.tile-5 .card-bg { 
+    background-image: url('secretary_image.jpg'); /* Replace with your image path */
 }
         .card:hover .card-bg { filter: grayscale(0%) brightness(1.1) contrast(1.1); }
         .card-content {
@@ -306,6 +316,7 @@
     flex: 12; 
     border-color: #ff0000;
     box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+    
 }
 
 /* Character Backgrounds */
@@ -318,8 +329,13 @@
 .tab-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent 100%);
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.9) 10%,
+        transparent 100%
+    );
     z-index: 1;
+    pointer-events: none;
 }
 
 .tab-content-vertical {
@@ -375,6 +391,12 @@
         }
         .leader-banner h3 { color: #ff0000; text-transform: uppercase; letter-spacing: 5px; font-size: 1.4rem; margin-bottom: 5px; }
         .leader-contact { font-size: 0.9rem; color: #aaa; font-style: italic; }
+/* .coleader-banner {
+            grid-column: 1 / -1; background: linear-gradient(90deg, rgba(255,0,0,0.15), transparent);
+            border-left: 5px solid #ff0000; padding: 20px; margin-bottom: 20px; text-align: left;
+        }
+        .coleader-banner h4 { color: #ff0000; text-transform: uppercase; letter-spacing: 5px; font-size: 1.4rem; margin-bottom: 5px; }
+        .coleader-contact { font-size: 0.9rem; color: #aaa; font-style: italic; } */
 /* Adjust overlay title spacing */
 #overlayTitle { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 10px; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 10px; text-align: center; }
         
@@ -451,6 +473,17 @@
                     </div>
                 </div>
             </div>
+            <div class="card-wrapper hidden">
+    <div class="card tile-5">
+        <div class="card-bg"></div>
+        <div class="card-sheen"></div>
+        <div class="card-content">
+            <div class="card-title">Organizing Secretary</div>
+            <div class="card-desc">Dr. Jane Doe</div>
+            <div class="card-desc">EMAIL ID:-jane@iiitmanipur.ac.in</div>
+        </div>
+    </div>
+</div>
         </div>
 
         <div class="team-section-wrapper hidden">
@@ -487,13 +520,14 @@
         const teamData = {
             dac: {heading:{name:"design and creative team"},
                 leader: { name: "Rahul Sharma", contact: "rahu230103021@iiitmanipur.ac.in | +916396165371" },
-                members: [{ name: "Trishansh verma", role: "tris230101068@iiitmanipur.ac.in" }
-                    , { name: "Yogita", role: "yogi230101091@iiitmanipur.ac.in" }
-                    , { name: "Harshit Mishra ", role: "hars230101065@iiitmanipur.ac.in" }
+                colead: [{ name: "Trishansh verma", role: "tris230101068@iiitmanipur.ac.in" }
+                    , { name: "Yogita", role: "yogi230101091@iiitmanipur.ac.in" }],
+                    members:[{ name: "Harshit Mishra ", role: "hars230101065@iiitmanipur.ac.in" }
                     , { name: "Sanjeev Singh", role: "sanj240101002@iiitmanipur.ac.in" }
                     , { name: "Harshit kumar ", role: "hars240101005@iiitmanipur.ac.in" }
                     , { name: "Anant Bhardwaj ", role: "anan240101007@iiitmanipur.ac.in" }
                     , { name: "Sahil", role: "sahi240102015@iiitmanipur.ac.in" }
+
                     , { name: "Aryan Singhvishesh", role: "arya240102006@iiitmanipur.ac.in" }
                     , { name: "Utkarsh Singh ", role: "utka240101014@iiitmanipur.ac.in" }
                     , { name: "Ratnesh Kumar ", role: "ratn240102054@iiitmanipur.ac.in" }
@@ -508,10 +542,11 @@
             },
             pao:{heading:{name:"PR and outreach team"},
         leader:{name:"Karthik",contact:"thir230101007@iiitmanipur.ac.in | +919392268820"},
-        members: [    { name: "Mansi Dubey ", role: "mans240101093@iiitmanipur.ac.in" }
+        colead: [    { name: "Pratham Gupta ", role: "prat230103034@iiitmanipur.ac.in" }
+            ,{ name: "Mansi Dubey ", role: "mans240101093@iiitmanipur.ac.in" }
                     , { name: "Alok Kumar ", role: "alok240101051@iiitmanipur.ac.in" }
-                    , { name: "Lavish Sadhwani ", role: "lavi230102040@iiitmanipur.ac.in" }
-                    , { name: "SHIVAM KUMAR", role: "shiv230102021@iiitmanipur.ac.in" }
+                    , { name: "Lavish Sadhwani ", role: "lavi230102040@iiitmanipur.ac.in" }],
+                    members:[ { name: "SHIVAM KUMAR", role: "shiv230102021@iiitmanipur.ac.in" }
                     , { name: "Shivu K C M", role: "shiv230101074@iiitmanipur.ac.in" }
                     , { name: "Arnav Tripathi", role: "arna230101077@iiitmanipur.ac.in" }
                     , { name: "Himanshu Raj", role: "hima230101084@iiitmanipur.ac.in" }
@@ -541,9 +576,9 @@
 
                     spons: {heading:{name:"sponsorship team"},
                 leader: { name: "Avvaru Naga Prabhas", contact: "avva230101015@iiitmanipur.ac.in | +919398238042" },
-            members:[ {name: "EESH SAXENA", role: "eesh230101032@iiitmanipur.ac.in" }
-                    , { name: "Leimapokpam Shenita Devi ", role: "leim240102051@iiitmanipur.ac.in" }
-                    , { name: "Deepak Raj ", role: "deep240102003@iiitmanipur.ac.in" }
+            colead:[ {name: "EESH SAXENA", role: "eesh230101032@iiitmanipur.ac.in" }
+                    , { name: "Leimapokpam Shenita Devi ", role: "leim240102051@iiitmanipur.ac.in" }],
+                    members:[ { name: "Deepak Raj ", role: "deep240102003@iiitmanipur.ac.in" }
                     , { name: "Akanksha Maurya", role: "akan240102010@iiitmanipur.ac.in" }
                     , { name: "Anamika Tirkey ", role: "anam240102037@iiitmanipur.ac.in" }
                     , { name: "Rishu raj", role: "rish240102039@iiitmanipur.ac.in" }
@@ -558,10 +593,10 @@
             },
             tech:{heading:{name:"Technical team"},
         leader:{name:"Shivam Kumar",contact:"shiv230102037@iiitmanipur.ac.in | +918826314381"},
-        members: [    { name: "Ujjwal Kumar ", role: "ujjw230104028@iiitmanipur.ac.in" }
+        colead: [    { name: "Ujjwal Kumar ", role: "ujjw230104028@iiitmanipur.ac.in" }
                     , { name: "Saloni Kumari ", role: "salo240101054@iiitmanipur.ac.in" }
-                    , { name: "Aman Chahar", role: "aman240103033@iiitmanipur.ac.in" }
-                    , { name: "Retesh Mourya ", role: "rete230101020@iiitmanipur.ac.in" }
+                    , { name: "Aman Chahar", role: "aman240103033@iiitmanipur.ac.in" }],
+                    members:[ { name: "Retesh Mourya ", role: "rete230101020@iiitmanipur.ac.in" }
                     , { name: "Arjeet Singh", role: "arje230101078@iiitmanipur.ac.in" }
                     , { name: "Krishna Anand ", role: "kris230101082@iiitmanipur.ac.in" }
                     , { name: "Aditya Sharma ", role: "adit230102059@iiitmanipur.ac.in" }
@@ -588,9 +623,9 @@
                     ]},
                     cstm:{heading:{name:"Management team"},
         leader:{name:"Aniket Raj",contact:"anik230103030@iiitmanipur.ac.in | +917900905797"},
-        members: [    { name: "Aishwary Raj", role: "aish230104023@iiitmanipur.ac.in" }
-                    , { name: "Rinyin", role: "rinyin251087@iiitmanipur.ac.in" }
-                    , { name: "Devesh Dixit ", role: "deve230101036@iiitmanipur.ac.in" }
+        colead: [    { name: "Aishwary Raj", role: "aish230104023@iiitmanipur.ac.in" }
+                    , { name: "Rinyin", role: "rinyin251087@iiitmanipur.ac.in" }],
+                    members:[ { name: "Devesh Dixit ", role: "deve230101036@iiitmanipur.ac.in" }
                     , { name: "Shobhit Mishra ", role: "shob230101046@iiitmanipur.ac.in" }
                     , { name: "Lakshya Singh ", role: "laks230103012@iiitmanipur.ac.in" }
                     , { name: "Swapnil Yadav", role: "swap230103015@iiitmanipur.ac.in" }
@@ -614,9 +649,9 @@
                     ]},
                     cege: {heading:{name:"Cultural events and Guest reception team"},
                 leader: { name: "Piyush prasad", contact: "piyu230102065@iiitmanipur.ac.in | +919142396828" },
-            members:[ {name: "SINTU RAY ", role: "sint240104015@iiitmanipur.ac.in" }
-                    , { name: "Jhansi Rani Majhi ", role: "jhansi255029@iiitmanipur.ac.in" }
-                    , { name: "Rishabh Trivedi ", role: "rish240101039@iiitmanipur.ac.in" }
+            colead:[ {name: "SINTU RAY ", role: "sint240104015@iiitmanipur.ac.in" }
+                    , { name: "Jhansi Rani Majhi ", role: "jhansi255029@iiitmanipur.ac.in" }],
+                    members:[{ name: "Rishabh Trivedi ", role: "rish240101039@iiitmanipur.ac.in" }
                     , { name: "Ashok Godara ", role: "asho240102009@iiitmanipur.ac.in" }
                     , { name: "Prashant ", role: "prashant253076@iiitmanipur.ac.in" }
                     , { name: "Rishav Raj", role: "rishav253081@iiitmanipur.ac.in" }
@@ -624,11 +659,12 @@
                    
                      soeh: {heading:{name:"Stall organizing, Event handling Team"},
                 leader: { name: "Sandeep Kumar Saini ", contact: "sand230101029@iiitmanipur.ac.in | +917850832958" },
-            members:[ {name: "Nancy", role: "nanc240101052@iiitmanipur.ac.in" }
-                    , { name: "Rishi Babu ", role: "rishi253084@iiitmanipur.ac.in" }
-                    , { name: "Abhay", role: "abhay252014@iiitmanipur.ac.in" }
+            colead:[ {name: "Nancy", role: "nanc240101052@iiitmanipur.ac.in" }
+                    , { name: "Rishi Babu ", role: "rishi253084@iiitmanipur.ac.in" }],
+                    members:[{ name: "Abhay", role: "abhay252014@iiitmanipur.ac.in" }
                     , { name: "Nabajit Das ", role: "nabajit253027@iiitmanipur.ac.in" }
-                    , { name: "Ujjwal Tiwari", role: "ujjwal253071@iiitmanipur.ac.in" }
+                    , { name: "Ujjwal Tiwari", role: "ujjwal253071@iiitmanipur.ac.in"
+ }
                     , { name: "Shaurya Singh ", role: "shaurya253074@iiitmanipur.ac.in" }
                     , { name: "Piyush yadav ", role: "piyush253078@iiitmanipur.ac.in" }
                     , { name: "Ankit Yadav", role: "ankit254053@iiitmanipur.ac.in" }
@@ -672,8 +708,9 @@ function openTeamOverlay(category) {
     title.textContent = data.heading.name.toUpperCase();
 
     if (!data) return;
-
+    membersGrid.style.display="grid";
     if (category === 'website') {
+    membersGrid.style.display="flex";
         // Create the Parallel Tab Layout for Website Team
         const tabsContainer = document.createElement('div');
         tabsContainer.className = 'website-tabs-container';
@@ -685,7 +722,7 @@ function openTeamOverlay(category) {
             tab.innerHTML = `
                 <div class="tab-overlay"></div>
                 <div class="tab-content-vertical">
-                    <span class="tab-name-vert">${m.name.split(' ')[0]}</span>
+                    <span class="tab-name-vert">${m.name}</span>
                     <span class="tab-role-vert">${m.role}</span>
                 </div>
             `;
@@ -699,8 +736,19 @@ function openTeamOverlay(category) {
         banner.innerHTML = `
             <h3>LEADER: ${data.leader.name}</h3>
             <div class="leader-contact">CONTACT: ${data.leader.contact}</div>
+            
         `;
         grid.appendChild(banner);
+        data.colead.forEach(k=> {
+            const banner = document.createElement('div');
+            banner.className = 'leader-banner';
+        banner.innerHTML = `
+            <h4>CO-LEAD: ${k.name}</h4>
+            <div class="leader-contact">CONTACT: ${k.role}</div>
+                </div>
+            `;
+            grid.appendChild(banner);
+        });
 
         data.members.forEach(m => {
             const div = document.createElement('div');
